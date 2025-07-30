@@ -1,8 +1,8 @@
 # Jellyfin RPC
 A Userbot-powered RPC program for Jellyfin! No Discord client required!
 
-[!CAUTION]
-While I never had any issues with this program after using it for a few months, I cannot guarantee that your account will be 100% safe as userbots are against the [Discord TOS](https://discord.com/terms), therefore **I don't take any responsibility for blocked Discord accounts in case a block might happen!**
+> [!CAUTION]
+> While I never had any issues with this program after using it for a few months, I cannot guarantee that your account will be 100% safe as userbots are against the [Discord TOS](https://discord.com/terms), therefore **I don't take any responsibility for blocked Discord accounts in case a block might happen!**
 
 ## Setting up
 You will need:
