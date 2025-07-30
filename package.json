@@ -1,0 +1,37 @@
+{
+  "name": "jellyfin-rpc",
+  "version": "1.0.0",
+  "description": "A Userbot-powered RPC program for Jellyfin! No Discord client required!",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "tsc && node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntogamerYT/Jellyfin-RPC.git"
+  },
+  "keywords": [
+    "jellyfin",
+    "rpc",
+    "discord",
+    "richpresence"
+  ],
+  "author": "AntogamerYT",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/AntogamerYT/Jellyfin-RPC/issues"
+  },
+  "homepage": "https://github.com/AntogamerYT/Jellyfin-RPC#readme",
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "dotenv": "^16.4.5",
+    "fastify": "^5.1.0",
+    "minigatewaylib": "github:AntogamerYT/MiniGatewayLib",
+    "sqlite3": "^5.1.7"
+  }
+}

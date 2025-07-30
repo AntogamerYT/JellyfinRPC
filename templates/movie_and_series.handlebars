@@ -1,0 +1,32 @@
+{
+   "type": "{{NotificationType}}",
+   "itemType": "{{ItemType}}",
+   "serverUrl": "{{ServerUrl}}",
+   "itemId": "{{ItemId}}",
+   "image": "{{ServerUrl}}/Items/{{ItemId}}/Images/Primary",
+   "title": "{{Name}}",
+   "imdb": "{{Provider_imdb}}",
+   {{#if_equals ItemType 'Episode'}}
+   "bSeries": true,
+   "series": {
+     "id": "{{SeriesId}}",
+     "image": "{{ServerUrl}}/Items/{{SeriesId}}/Images/Primary",
+     "title": "{{{SeriesName}}}",
+     "season": "{{SeasonNumber}}",
+     "season00": "{{SeasonNumber00}}",
+     "episode": "{{EpisodeNumber}}"
+   },
+   {{else}}
+   "bSeries": false,
+   {{/if_equals}}
+   "playbackPosition": "{{PlaybackPosition}}",
+   "runTime": "{{RunTime}}",
+   "runTimeTicks": "{{RunTimeTicks}}",
+   "bPaused": {{#if_equals IsPaused 'True'}}true{{else}}false{{/if_equals}},
+   {{#if_equals NotificationType 'PlaybackStop'}}
+   "bPlayedToCompletion": {{#if_equals PlayedToCompletion 'True'}}true{{else}}false{{/if_equals}},
+   {{/if_equals}}
+   "timestamp": "{{Timestamp}}",
+   "user": "{{NotificationUsername}}",
+   "userId": "{{UserId}}"
+} 
