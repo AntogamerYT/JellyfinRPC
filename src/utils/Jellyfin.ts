@@ -35,7 +35,7 @@ export class Jellyfin {
                     return "";
                 }
 
-                const expiry = Number("0x" + new URL(discordImage.url).searchParams.get("ex")) + Date.now();
+                const expiry = Number("0x" + new URL(discordImage.url).searchParams.get("ex")) * 1000;
                 this.db.run("INSERT OR IGNORE INTO images ('jfContentId', 'mediaId', 'mediaProxyLink', 'mediaProxyExpiry') VALUES (?, ?, ?, ?)", [contentId, discordImage.id, discordImage.url, expiry]);
                 return discordImage.url;
             } finally {
@@ -45,6 +45,7 @@ export class Jellyfin {
             debug(`Image found for ${contentId}, checking expiry`, "detailed");
 
             let expiry = row.mediaProxyExpiry;
+            debug(`${contentId} image expiry: ${expiry}`, "detailed");
 
             if (expiry < Date.now()) {
                 debug(`Image for ${contentId} has expired, refreshing`, "detailed");
@@ -56,8 +57,8 @@ export class Jellyfin {
                         warning(`Failed to refresh image for ${contentId}`, "errors");
                         return "";
                     }
-
-                    const newExpiry = Number("0x" + new URL(refreshed).searchParams.get("ex"));
+                    
+                    const newExpiry = Number("0x" + new URL(refreshed).searchParams.get("ex")) * 1000 + Date.now();
                     this.db.run("UPDATE images SET mediaProxyLink = ?, mediaProxyExpiry = ? WHERE jfContentId = ?", [refreshed, newExpiry, contentId]);
                     return refreshed;
                 } finally {

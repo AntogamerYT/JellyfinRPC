@@ -79,8 +79,15 @@ client.on("resumed", () => {
 })
 
 // Used to keep track of the last pause state, so that we don't spam the Discord Gateway with RPC updates on PlaybackProgress
-let lastPauseState: boolean|null = null;
-app.post("/jellyfin/webhook", async (req: FastifyRequest<{Body: string}>, res) => {
+let lastPauseState: boolean | null = null;
+
+app.post("/jellyfin/webhook", async (req: FastifyRequest<{ Body: string }>, res) => {
+    
+    if (process.env.ENABLE_AUTH === "true" && (!req.headers["authorization"] || req.headers["authorization"] !== `${process.env.AUTH_KEY}`)) {
+        info(`Unauthorized access attempt from ${req.ip}.`, 'default');
+        return res.status(401).send({ message: "Unauthorized" });
+    }
+
     let body: JellyfinWebhookNotification;
     try {
         body = JSON.parse(req.body);
@@ -172,7 +179,7 @@ app.post("/jellyfin/webhook", async (req: FastifyRequest<{Body: string}>, res) =
         case "PlaybackStop": {
             info("Playback has stopped, clearing the RPC.", 'default');
             const rpc = new RPCActivity({
-                status: "idle",
+                status: "invisible",
                 afk: false,
                 activities: []
             });

@@ -4,9 +4,22 @@ A Userbot-powered RPC program for Jellyfin! No Discord client required!
 > [!CAUTION]
 > While I never had any issues with this program after using it for a few months, I cannot guarantee that your account will be 100% safe as userbots are against the [Discord TOS](https://discord.com/terms), therefore **I don't take any responsibility for blocked Discord accounts in case a block might happen!**
 
+## How does this work?
+As mentioned in the previous warning, JellyfinRPC uses a userbot to update your RPC based on what you're watching on Jellyfin. It makes use of the Webhook plugin to receive realtime events directly from your Jellyfin instance without having to contact your Jellyfin instance's API every few seconds or so.
+
+Due to the way RPC is handled, JellyfinRPC ensures that your account doesn't always appear as online:
+
+- By default, your status is set to invisible.
+- When Jellyfin fires an event to the program (such as starting playback), your status goes idle.
+- When playback stops, your status returns to invisible.
+
+Note: The "invisible" and "idle" statuses set by JellyfinRPC can be overridden by another Discord client. For example, if you're online on desktop while JellyfinRPC is idle, Discord will show you as online.
+
+## Screenshots
+![](readme/Screen1.png) ![](readme/Screen2.png) ![](readme/Screen3.png)
+
 ## Setting up
 You will need:
-- [Jellyfin Webhook](https://github.com/jellyfin/jellyfin-plugin-webhook)
 - NodeJS 18+
 - Your Discord account's token
 - A Discord bot's token
@@ -45,8 +58,8 @@ Now that the JellyfinRPC setup is done, you will need to move over to Jellyfin:
     - Episodes
     - Series
     - Other media types are currently not supported and will cause JellyfinRPC to crash. Support for them will be added in the future.
-9. Get the Template from [templates/movies_and_series.handlebars](templates/movie_and_series.handlebars) and paste it in the text box.
-10. If you set up an auth key, set add the following Request Header:
+9. Get the Template from [templates/movies_and_series.handlebars](templates/movies_and_series.handlebars) and paste it in the text box.
+10. If you set up an auth key, add the following Request Header:
     - Key: Authorization
     - Value: {your AUTH_KEY}
 11. Press Save
@@ -63,6 +76,9 @@ To get your account token, you will need to use your browser (or your Discord cl
     - In the `Authorization` header, you should see a token: that's your account token!
     - Example: ![](readme/YourToken.png)
 
+> [!CAUTION]
+> **MAKE SURE TO KEEP YOUR ACCOUNT TOKEN PRIVATE!** Your Account token is the "magic word" to get into your account, if anyone gets their hands on it they can effectively do anything to your account while also bypassing 2FA. Be safe!
+
 ### Getting a Discord Bot token
 JellyfinRPC requires a Bot token to upload and refresh an image's link (like a movie's image), this is required as Discord forces you to use a Discord CDN link when setting an image in your RPC.
 
@@ -75,6 +91,26 @@ Fortunately, this is way easier than getting an account token:
 - You now have your Bot token!
 
 ### Getting a channel ID
-TODO
+
+You will need a Discord server with your bot added for this.
+
+To add your bot to the server:
+1. Go to the OAuth2 tab in your application in the Developer Dashboard
+2. Scroll until you see the OAuth2 URL Generator
+3. In the scopes, select `bot`
+    - If you need to, you can also add permissions to your bot manually via the URL Generator. Keep in mind that the bot will need access to the channel as it will need to send all the series/movie's images
+4. Copy the link, navigate to it
+5. Select the server where you want to add the bot and press Authorize
 
 
+
+Now that your bot is in the server, you will need to get the ID of a channel:
+
+> [!TIP]
+> I highly suggest using a channel you don't use, as the bot is going to send all the images in the channel you provide to JellyfinRPC
+
+1. Enable [Discord Developer Mode](https://support-dev.discord.com/hc/en-us/articles/360028717192-Where-can-I-find-my-Application-Team-Server-ID)
+2. Go to your server, create a new channel (or use an existing one)
+3. Right click your channel
+4. Press `Copy Channel ID`
+5. Done!
