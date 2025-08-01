@@ -201,9 +201,11 @@ app.listen({ port: parseInt(process.env.PORT || "3000"), host: process.env.HOST 
 });
 
 process.on("SIGINT", () => {
-    console.log("Ctrl C Detected, attempting graceful logout")
+    info("Received SIGINT, shutting down gracefully.", 'default');
 
-    client.logout();
+    if (client.gateway.ready) {
+        client.logout();
+    }
 
     process.exit(0)
 })
