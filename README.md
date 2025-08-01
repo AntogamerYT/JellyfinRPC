@@ -114,3 +114,5 @@ Now that your bot is in the server, you will need to get the ID of a channel:
 3. Right click your channel
 4. Press `Copy Channel ID`
 5. Done!
+
+[![Star History Chart](https://api.star-history.com/svg?repos=AntogamerYT/JellyfinRPC&type=Date)](https://www.star-history.com/#AntogamerYT/JellyfinRPC&Date)
