@@ -21,7 +21,6 @@ export class Jellyfin {
 
     public async getImage(contentId: string): Promise<string> {
         const row: DatabaseDocument = await Database.fetchFirst(this.db, "SELECT * FROM images WHERE jfContentId = ?", [contentId]);
-        // Use a Set to track uploads in progress for better performance and atomicity
         const inProgressSet: Set<string> = Discord.uploadInProgressSet;
 
         if (!row && !inProgressSet.has(contentId)) {
@@ -68,7 +67,7 @@ export class Jellyfin {
 
             return row.mediaProxyLink;
         } else {
-            warning(`Image for ${contentId} is already being uploaded or refreshed`, "errors");
+            warning(`Image for ${contentId} is already being uploaded or refreshed`, "detailed");
             return "";
         }
 
